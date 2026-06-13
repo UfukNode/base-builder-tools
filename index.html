@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Base Builder Tools</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Base builder tools">
+        <header class="topbar">
+          <div class="brand-row">
+            <div>
+              <p class="eyebrow">Base mainnet</p>
+              <div class="title-row">
+                <img class="brand-logo" src="./assets/base-square-blue.svg" alt="" aria-hidden="true" />
+                <h1>Builder Tools</h1>
+              </div>
+            </div>
+          </div>
+          <div class="wallet-actions">
+            <span class="status-pill" id="networkStatus">Not connected</span>
+            <div class="wallet-menu-wrap">
+              <button class="primary-button wallet-button" id="connectButton" type="button">Connect Wallet</button>
+              <div class="wallet-menu" id="walletMenu" hidden>
+                <span class="wallet-menu-label">Connected wallet</span>
+                <strong class="wallet-menu-address" id="walletMenuAddress">-</strong>
+                <button class="menu-button" id="disconnectButton" type="button">Disconnect</button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <nav class="task-tabs" aria-label="Task sections">
+          <button class="task-tab is-active" type="button" data-tool-tab="builder">Builder</button>
+          <button class="task-tab" type="button" data-tool-tab="onchain">Onchain</button>
+          <button class="task-tab" type="button" data-tool-tab="github">GitHub</button>
+        </nav>
+
+        <section class="status-grid" aria-label="Wallet status">
+          <div class="metric-panel">
+            <span class="metric-label">Balance</span>
+            <strong class="metric-value" id="walletBalance">-</strong>
+          </div>
+          <div class="metric-panel">
+            <span class="metric-label">Base tx count</span>
+            <strong class="metric-value" id="walletNonce">-</strong>
+          </div>
+          <div class="metric-panel">
+            <span class="metric-label">Contract deploys</span>
+            <strong class="metric-value" id="deployTotal">-</strong>
+          </div>
+        </section>
+
+        <div class="tool-grid">
+          <section class="tool-panel tool-view is-active" id="builderPanel" aria-labelledby="builderTitle" data-tool-panel="builder">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Builder</p>
+                <h2 id="builderTitle">Contract Deployments</h2>
+              </div>
+              <span class="chain-badge">Contract creation</span>
+            </div>
+
+            <div class="segmented-control" role="group" aria-label="Deployment count">
+              <button class="segment is-active" type="button" data-deploy-count="1">1</button>
+              <button class="segment" type="button" data-deploy-count="5">5</button>
+              <button class="segment" type="button" data-deploy-count="10">10</button>
+            </div>
+
+            <div class="estimate-line">
+              <span>Gas estimate</span>
+              <strong id="deployEstimate">Connect wallet</strong>
+            </div>
+
+            <button class="primary-button full-width" id="deployButton" type="button" disabled>
+              Deploy Contracts
+            </button>
+
+            <div class="activity-list" id="deployLog" aria-live="polite"></div>
+          </section>
+
+          <section class="tool-panel tool-view" id="onchainPanel" aria-labelledby="onchainTitle" data-tool-panel="onchain">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Onchain</p>
+                <h2 id="onchainTitle">Transaction Helper</h2>
+              </div>
+              <span class="chain-badge warning">Gas required</span>
+            </div>
+
+            <div class="milestone-row" role="group" aria-label="Transaction milestone">
+              <button class="milestone is-active" type="button" data-tx-target="10">10</button>
+              <button class="milestone" type="button" data-tx-target="50">50</button>
+              <button class="milestone" type="button" data-tx-target="100">100</button>
+              <button class="milestone" type="button" data-tx-target="1000">1,000</button>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-track" aria-hidden="true">
+                <span class="progress-fill" id="txProgressFill"></span>
+              </div>
+              <div class="progress-meta">
+                <span id="txProgressText">Connect wallet</span>
+                <strong id="txRemaining">-</strong>
+              </div>
+            </div>
+
+            <label class="input-row" for="txBatchCount">
+              <span>Tx per run</span>
+              <input id="txBatchCount" type="number" min="1" max="10" value="1" />
+            </label>
+
+            <div class="estimate-line">
+              <span>Gas estimate</span>
+              <strong id="txEstimate">Connect wallet</strong>
+            </div>
+
+            <button class="secondary-button full-width" id="txButton" type="button" disabled>
+              Send Minimal Transactions
+            </button>
+
+            <div class="activity-list" id="txLog" aria-live="polite"></div>
+          </section>
+
+          <section class="tool-panel tool-view github-panel" id="githubPanel" aria-labelledby="githubTitle" data-tool-panel="github">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">GitHub</p>
+                <h2 id="githubTitle">Public Commits</h2>
+              </div>
+              <span class="chain-badge neutral">No OAuth</span>
+            </div>
+
+            <div class="segmented-control" role="group" aria-label="GitHub commit target">
+              <button class="segment is-active" type="button" data-github-target="1">1</button>
+              <button class="segment" type="button" data-github-target="50">50</button>
+              <button class="segment" type="button" data-github-target="100">100</button>
+            </div>
+
+            <div class="github-input-grid">
+              <label class="input-row github-input-row" for="githubUsername">
+                <span>Username</span>
+                <input id="githubUsername" type="text" autocomplete="username" placeholder="octocat" />
+              </label>
+              <label class="input-row github-input-row" for="githubRepo">
+                <span>Public repo</span>
+                <input id="githubRepo" type="text" value="builder-log" />
+              </label>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-track" aria-hidden="true">
+                <span class="progress-fill github-progress-fill" id="githubProgressFill"></span>
+              </div>
+              <div class="progress-meta">
+                <span id="githubProgressText">Enter username</span>
+                <strong id="githubRemaining">-</strong>
+              </div>
+            </div>
+
+            <div class="github-actions">
+              <button class="secondary-button" id="githubCheckButton" type="button">Check Public Commits</button>
+              <a class="link-button" id="githubCreateRepoLink" href="https://github.com/new?visibility=public&name=builder-log" target="_blank" rel="noreferrer">
+                Create Public Repo
+              </a>
+              <button class="secondary-button" id="githubCopyButton" type="button">Copy Commands</button>
+            </div>
+
+            <pre class="command-box" id="githubCommandBlock"></pre>
+          </section>
+        </div>
+      </section>
+
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

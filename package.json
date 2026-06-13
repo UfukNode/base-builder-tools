@@ -1,0 +1,10 @@
+{
+  "name": "base-builder-web",
+  "version": "1.0.0",
+  "description": "Dependency-free static Base builder wallet dapp.",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "node serve.js"
+  }
+}
