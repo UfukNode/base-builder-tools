@@ -70,16 +70,30 @@ For GitHub Pages:
 
 ## Contract Bytecode
 
-The builder flow deploys a minimal contract with runtime bytecode:
+The builder flow deploys a small proof contract instead of a token, approval contract, or admin-controlled contract.
+
+Its constructor stores the deployer address in storage slot `0`. The runtime returns that stored address for read calls. In Solidity-like terms, it behaves like:
 
 ```text
-0x00
+contract BaseBuilderProof {
+    address public builder;
+
+    constructor() {
+        builder = msg.sender;
+    }
+}
 ```
 
 Creation bytecode:
 
 ```text
-0x6001600c60003960016000f300
+0x33600055600b6010600039600b6000f360005460005260206000f3
 ```
 
-This creates a real contract account with one `STOP` opcode. It is deliberately simple so the source can be reviewed directly.
+Runtime bytecode:
+
+```text
+0x60005460005260206000f3
+```
+
+This creates a real contract account and records the deployer address. It has no token logic, no approvals, no transfer function, no owner-only controls, and no external calls.

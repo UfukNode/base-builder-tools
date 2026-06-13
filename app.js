@@ -8,7 +8,7 @@ const GITHUB_COMMIT_SEARCH_API = "https://api.github.com/search/commits";
 const MAX_DEPLOY_COUNT = 10;
 const MAX_TX_BATCH = 10;
 const MAX_DEPLOY_COUNT_PAGES = 40;
-const MINIMAL_CONTRACT_CREATION_CODE = "0x6001600c60003960016000f300";
+const PROOF_CONTRACT_CREATION_CODE = "0x33600055600b6010600039600b6000f360005460005260206000f3";
 
 const state = {
   account: "",
@@ -350,7 +350,7 @@ async function estimateDeployGas() {
   return walletRequest("eth_estimateGas", [
     {
       from: state.account,
-      data: MINIMAL_CONTRACT_CREATION_CODE,
+      data: PROOF_CONTRACT_CREATION_CODE,
       value: "0x0",
     },
   ]);
@@ -389,7 +389,7 @@ async function deployContracts() {
       const txHash = await walletRequest("eth_sendTransaction", [
         {
           from: state.account,
-          data: MINIMAL_CONTRACT_CREATION_CODE,
+          data: PROOF_CONTRACT_CREATION_CODE,
           value: "0x0",
         },
       ]);
