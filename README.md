@@ -32,8 +32,6 @@ The contract deploy counter sends the connected wallet address to Base Blockscou
 
 Base mainnet transactions are not free. The onchain helper uses low-cost zero-value self transactions, but every transaction still needs gas.
 
-Gas-free transactions require a sponsor/paymaster. That means somebody else pays the gas and must operate anti-abuse limits. This public static app does not include sponsorship because an open unlimited sponsor would be easy to drain.
-
 ## Run Locally
 
 Use the included dependency-free server:
